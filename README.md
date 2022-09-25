@@ -1,6 +1,3 @@
-
-##Calculator
-
 ### Description
 
 This is a simple calculator with a web interface. 
