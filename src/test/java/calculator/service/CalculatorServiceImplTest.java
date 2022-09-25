@@ -36,7 +36,8 @@ class CalculatorServiceImplTest {
                 arguments("( 5 + 3 ) * ( 2 * ( 2 + 2 ) )", "64"),
                 arguments("2 + 7 * 3 + 3 / 3", "24"),
                 arguments("85 * 2 + ( 36 - 8 / 2 - 49 * 8 + 68 / 2 ) + 89 - ( 35 * 6 - 7 )", "-270"),
-                arguments("2 / 0", "ERROR"),
+                arguments("2 / 0", "Infinity"),
+                arguments("999 * 99 * 568 / 687 * 6123 * 65465462313 * 65465143251 * 654165413213.21", "1.4036747289915636E42"),
                 arguments("2 * ( 3 + 4 ) )", "ERROR")
         );
     }
