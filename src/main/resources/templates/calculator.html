@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>calculator</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    </head>
+    <body>
+        <div align="center">
+            <h1>Calculator: </h1>
+            <input id="text" type="text" disabled/>
+            <p>
+                <input type="button" class="button" name="clear" value="C" onclick="clearField()"/>
+                <input type="button" class="button" name="left_parentheses" value="( " onclick="addValue(this)"/>
+                <input type="button" class="button" name="right_parentheses" value=" )" onclick="addValue(this)"/>
+                <input type="button" class="button" name="divide" value=" / " onclick="addValue(this)"/>
+                <br>
+                <input type="button" class="button" name="one" value="1" onclick="addValue(this)"/>
+                <input type="button" class="button" name="two" value="2" onclick="addValue(this)"/>
+                <input type="button" class="button" name="three" value="3" onclick="addValue(this)"/>
+                <input type="button" class="button" name="multiply" value=" * " onclick="addValue(this)"/>
+                <br>
+                <input type="button" class="button" name="four" value="4" onclick="addValue(this)"/>
+                <input type="button" class="button" name="five" value="5" onclick="addValue(this)"/>
+                <input type="button" class="button" name="six" value="6" onclick="addValue(this)"/>
+                <input type="button" class="button" name="add" value=" + " onclick="addValue(this)"/>
+                <br>
+                <input type="button" class="button" name="seven" value="7" onclick="addValue(this)"/>
+                <input type="button" class="button" name="eight" value="8" onclick="addValue(this)"/>
+                <input type="button" class="button" name="nine" value="9" onclick="addValue(this)"/>
+                <input type="button" class="button" name="subtract" value=" - " onclick="addValue(this)"/>
+                <br>
+                <input type="button" class="button" name="remove" value="<" onclick="remove()"/>
+                <input type="button" class="button" name="zero" value="0" onclick="addValue(this)"/>
+                <input type="button" class="button" name="point" value="." onclick="addValue(this)"/>
+                <input id="result" type="button" class="button" name="result" value="=" onclick="sendRequest()"/>
+            </p>
+        </div>
+    </body>
+    <style>
+        .button {
+            border-radius:2px;
+            padding:0px;
+            height:35px;
+            width: 35px;
+            margin: 1px;
+          }
+    </style>
+    <script type="text/javascript">
+        var textInput = document.getElementById("text");
+
+        function addValue (button) {
+            textInput.value += button.value;
+        }
+
+        function remove() {
+            textInput.value = textInput.value.substring(0, textInput.value.length - 2);
+        }
+
+        function clearField() {
+            textInput.value = '';
+        }
+
+        function sendRequest() {
+            fetch("/calculate", {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: textInput.value
+            })
+            .then(data => data.text())
+            .then(data => {
+                clearField();
+                textInput.value = data;
+            });
+        }
+    </script>
+</html>
