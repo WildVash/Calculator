@@ -43,23 +43,21 @@ public class CalculatorServiceImpl implements CalculatorService {
 
             if (isDigit(part)) {
                 result.push(Double.parseDouble(part));
-            } else {
-                if ("+".equals(part) || "-".equals(part)) {
-                    operations.push(part);
-                } else if ("*".equals(part) || "/".equals(part)) {
-                    String nextPart = input[i + 1].trim();
+            } else if ("+".equals(part) || "-".equals(part)) {
+                operations.push(part);
+            } else if ("*".equals(part) || "/".equals(part)) {
+                String nextPart = input[i + 1].trim();
 
-                    if (!isDigit(nextPart)) {
-                        operations.push(part);
-                    } else {
-                        result.push(doMath(result.pop(), Double.parseDouble(nextPart), part));
-                        i++;
-                    }
-                } else if ("(".equals(part)) {
+                if (!isDigit(nextPart)) {
                     operations.push(part);
-                } else if (")".equals(part)) {
-                    calculateWhenParenthesesAreClosed(result, operations);
+                } else {
+                    result.push(doMath(result.pop(), Double.parseDouble(nextPart), part));
+                    i++;
                 }
+            } else if ("(".equals(part)) {
+                operations.push(part);
+            } else if (")".equals(part)) {
+                calculateWhenParenthesesAreClosed(result, operations);
             }
         }
     }
